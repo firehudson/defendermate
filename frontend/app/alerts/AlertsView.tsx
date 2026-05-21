@@ -5,6 +5,7 @@ import { useAlertFilters } from '@/hooks/useAlertFilters';
 import { useAlerts } from '@/hooks/useAlerts';
 import AlertsFilters from '@/components/alerts/AlertsFilters';
 import AlertsTable from '@/components/alerts/AlertsTable';
+import AlertDetailPanel from '@/components/alerts/AlertDetailPanel';
 import Pagination from '@/components/alerts/Pagination';
 
 export default function AlertsView() {
@@ -35,6 +36,7 @@ export default function AlertsView() {
             />
           )}
         </div>
+        {selectedAlertId && <AlertDetailPanel alertId={selectedAlertId} />}
       </div>
     </div>
   );
