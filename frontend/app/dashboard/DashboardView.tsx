@@ -7,6 +7,8 @@ import {
   Cell,
   BarChart,
   Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -14,6 +16,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import { useAlertStats } from '@/hooks/useAlertStats';
+import { useAlertTimeline } from '@/hooks/useAlertTimeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -57,6 +60,7 @@ function StatCard({
 export default function DashboardView() {
   const router = useRouter();
   const { data, isLoading } = useAlertStats();
+  const { data: timeline } = useAlertTimeline(30);
 
   if (isLoading) {
     return (
@@ -180,6 +184,35 @@ export default function DashboardView() {
           </CardContent>
         </Card>
       </div>
+
+      {timeline && timeline.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Alert Volume — Last 30 Days</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={timeline}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 10 }}
+                  tickFormatter={(d) => d.slice(5)}
+                />
+                <YAxis tick={{ fontSize: 11 }} />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6366f1"
+                  dot={false}
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
