@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { X } from 'lucide-react';
+import { X, Link as LinkIcon } from 'lucide-react';
 import api from '@/lib/api';
 import { cn } from '@/lib/utils';
 
@@ -75,6 +75,14 @@ export default function AlertDetailPanel({ alertId }: Props) {
         <div className="flex gap-1">
           <Button variant="ghost" size="sm" onClick={togglePanelMode} className="text-xs">
             {panelMode === 'overlay' ? 'Dock' : 'Float'}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigator.clipboard.writeText(window.location.href)}
+            title="Copy link to this alert"
+          >
+            <LinkIcon className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="icon" onClick={close}>
             <X className="h-4 w-4" />
